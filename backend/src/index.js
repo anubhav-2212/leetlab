@@ -14,3 +14,6 @@ app.use('/api/v1/auth',authRoutes)
 app.listen(PORT,()=>{
     console.log(`server is listening at port ${PORT}`)
 })
+app.get("/health", (req, res) => {
+    res.send("The route is working fine");
+});
