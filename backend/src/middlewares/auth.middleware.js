@@ -52,3 +52,35 @@ export const authMiddleware=async(req,res,next)=>{
     
 }
 
+export const checkAdmin=async(req,res)=>{
+    const userId=req.user.id;
+    if(!userId){
+        return res.status(401).json({
+            success:false,
+            message:"User id not found"
+        })
+    }
+    try {
+        const user=await db.user.findUnique({
+            where:{
+                id:userId
+            },
+            select:{
+             role:true
+            }
+        })
+        if(!user || user.role!=="ADMIN"){
+            return req.status(401).json({
+                success:false,
+                message:"Unauthorized access-ADMIN ONLY"
+            })
+        }
+        next();
+    } catch (error) {
+        console.log(error,"error checking role")
+        return res.status(500).json({
+            message:"Internal Server error"
+        })
+        
+    }
+}
