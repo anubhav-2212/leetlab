@@ -10,4 +10,4 @@ authRoutes.post('/logout',authMiddleware,logout)
 authRoutes.post('/check',authMiddleware,check)
 
 export default authRoutes;
-
+``
